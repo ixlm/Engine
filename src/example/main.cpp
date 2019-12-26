@@ -45,7 +45,8 @@ void CoolGame::init(GLManager *glManager)
   input->registerKeyToAction(SDLK_c, "swapCamera");
 
   input->bindAction("fire", IE_PRESSED, [this]() {
-    MeshLoader cube("cube.obj");
+    // MeshLoader cube("cube.obj");
+    MeshLoader cube("Pregnant.obj"); //这是一个恶心的僵尸
     cube.getEntity()->getTransform().setPosition(primary_camera->getParent()->getPosition());
     cube.getEntity()->addComponent<BoxCollider>(glm::vec3(0.5, 0.5, 0.5), 50);
     addToScene(cube.getEntity());
@@ -216,6 +217,7 @@ void CoolGame::init(GLManager *glManager)
   addToScene(money.getEntity());
 
   MeshLoader money2("monkey3.obj");
+  // MeshLoader money2("Pregnant.obj");
   money2.getEntity()->addComponent<PerspectiveCamera>(glm::pi<float>() / 2.0f, getEngine()->getWindow()->getWidth() / (float)getEngine()->getWindow()->getHeight(), 0.8f, 100.0f);
   money2.getEntity()->addComponent<FreeMove>();
 #if defined(ANDROID)

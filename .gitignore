@@ -16,3 +16,4 @@ local.properties
 *.so
 .vs/
 imgui.ini
+dependencies
