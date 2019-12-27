@@ -19,12 +19,21 @@
 #endif
 
 class GuiManager;
+//added by xlm, 
+class WindowEventObserver
+{
+public:
+  virtual ~WindowEventObserver() = default;
+  virtual void onResize(int32_t width, int32_t height) = 0;
+};
 
 class Window
 {
 public:
   Window(void);
   ~Window(void);
+  //added by xlm
+  void registerWindowEventObserver(WindowEventObserver* observer);
 
   void init(void);
 
@@ -54,7 +63,6 @@ public:
 
   void setFullscreen(uint32_t flag);
   void toggleFullscreen(void);
-
 private:
   SDL_Window *m_window;
   SDL_GLContext m_glContext;
@@ -66,4 +74,5 @@ private:
 
   bool m_quit;
   bool m_fullscreen;
+  WindowEventObserver* m_win_evt_observer;
 };

@@ -15,7 +15,7 @@
 
 #include "Input.h"
 
-class Engine
+class Engine : public WindowEventObserver
 {
 public:
   Engine(Game *game);
@@ -33,6 +33,10 @@ public:
   PhysicsManager *getPhysicsManager(void) const;
 
   std::chrono::microseconds getDeltaTime(void) const;
+
+  //---------------------------WindowEventObserver begin-------
+  virtual void onResize(int32_t width, int32_t height) ;
+  //---------------------------WindowEventObserver end-------
 
 private:
   std::unique_ptr<Window> m_window;

@@ -52,7 +52,9 @@ Window::Window(void)
 
   m_fullscreen = false;
 
-  uint32_t flags = SDL_WINDOW_OPENGL;
+  // uint32_t flags = SDL_WINDOW_OPENGL;
+  //modify by xlm
+  uint32_t flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
 
   if (m_fullscreen) {
     flags |= SDL_WINDOW_FULLSCREEN;
@@ -131,6 +133,18 @@ void Window::tick(void)
     case SDL_QUIT:
       m_quit = true;
       break;
+    case SDL_WINDOWEVENT: // added by xlm, process window relatived event
+    {
+      if (event.window.event == SDL_WINDOWEVENT_RESIZED) {
+
+        SDL_GL_GetDrawableSize(m_window, &m_width, &m_height);
+        if (m_win_evt_observer)
+        {
+          m_win_evt_observer->onResize(m_width, m_height);
+        }
+      }
+    } 
+    break;
     }
   }
 
@@ -230,4 +244,21 @@ void Window::toggleFullscreen(void)
     setFullscreen(0);
   }
   
+}
+
+// void Window::__on_resize(int32_t width, int32_t height)
+// {
+//   // auto w = m_window->w;
+//   // auto h = m_window->h;
+//   auto item1 = getDisplaySize();
+//   auto item2  = getDrawableSize();
+//   // log_info("w:%d,h:%d\n",  m_window->w, m_window->h);
+//   if (width == m_width && height == m_height)
+//     return;
+// }
+
+  //added by xlm
+void Window::registerWindowEventObserver(WindowEventObserver* observer)
+{
+  m_win_evt_observer = observer;
 }

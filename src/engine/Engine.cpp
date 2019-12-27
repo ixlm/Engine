@@ -27,6 +27,9 @@ Engine::Engine(Game *game)
   log_info("Initializing SDL");
   m_window = std::make_unique<Window>();
 
+  //added by xlm
+  m_window->registerWindowEventObserver(this);
+
   log_info("Initializing GLEW");
   m_glewManager = std::make_unique<GLEWManager>();
 
@@ -163,4 +166,9 @@ PhysicsManager *Engine::getPhysicsManager(void) const
 std::chrono::microseconds Engine::getDeltaTime(void) const
 {
   return m_deltaTime;
+}
+
+void Engine::onResize(int32_t width, int32_t height) 
+{
+  m_glManager->setDrawSize({width, height});
 }
